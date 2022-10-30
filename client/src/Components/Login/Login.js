@@ -47,6 +47,7 @@ const Login = () => {
           </Avatar>
           <h2>Sign In</h2>
           <TextField
+            type={'email'}
             id="outlined-basic"
             label="Email"
             variant="outlined"

@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import Admin from "../models/adminmodels.js";
 
 const login = async (req, res, next) => {
- 
   try {
     const { email, password } = req.body;
     const admin = await Admin.findOne({ email });
@@ -39,10 +38,20 @@ const addEmployee = async (req, res, next) => {
   }
 };
 
+const getAllemployee = async (req, res, next) => {
+  console.log('get');
+  try {
+    const  getallemployee = await Employe.find({});
+    res.status(200).json(getallemployee);
+  } catch (error) {
+    next(error);
+    console.log(error);
+  }
+};
+
 const updateEmplyee = async (req, res, next) => {
   try {
     const { name, phone, email, department, id } = req.body;
-    console.log(req.body);
     console.log("id", id);
     const update = await Employe.updateOne(
       { _id: id },
@@ -66,4 +75,4 @@ const updateEmplyee = async (req, res, next) => {
   }
 };
 
-export { addEmployee, login, updateEmplyee };
+export { addEmployee, login, updateEmplyee, getAllemployee };
