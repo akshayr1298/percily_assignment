@@ -39,7 +39,7 @@ const addEmployee = async (req, res, next) => {
 };
 
 const getAllemployee = async (req, res, next) => {
-  console.log('get');
+
   try {
     const  getallemployee = await Employe.find({});
     res.status(200).json(getallemployee);
@@ -52,7 +52,6 @@ const getAllemployee = async (req, res, next) => {
 const updateEmplyee = async (req, res, next) => {
   try {
     const { name, phone, email, department, id } = req.body;
-    console.log("id", id);
     const update = await Employe.updateOne(
       { _id: id },
       {
@@ -67,7 +66,7 @@ const updateEmplyee = async (req, res, next) => {
     if (update) {
       res
         .status(200)
-        .json({ message: "employee details update successfully", update });
+        .json({ message: "success", update });
     }
   } catch (error) {
     next(error);

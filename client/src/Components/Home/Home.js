@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,9 +12,13 @@ import "./home.css";
 import { serverurl } from "../../URl/Server";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../../store/Context";
 
 const Home = () => {
   const [employee, setEmployee] = useState([]);
+  const navigate = useNavigate()
+  const {setUser} = useContext(userContext)
 
   const displayEmplyee = async () => {
     axios.get(`${serverurl}api/user/getallemployee`).then((res) => {
@@ -32,7 +36,17 @@ const Home = () => {
   return (
     <>
       <Container sx={{ marginTop: "5rem" }}>
-        <Button variant="contained">Add</Button>
+        <Button variant="contained" onClick={() => navigate("/add")}>
+          Add
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{ marginLeft: 5 }}
+          color="success"
+          onClick={() => navigate("/")}
+        >
+          Logout
+        </Button>
         <Box>
           <Typography sx={{ marginTop: "20px" }} variant="h5">
             Employee Details
@@ -61,7 +75,15 @@ const Home = () => {
                       <TableCell>{item.phone} </TableCell>
                       <TableCell>{item.email} </TableCell>
                       <TableCell>{item.department} </TableCell>
-                      <Button> <EditIcon/> </Button>
+                      <Button
+                        onClick={() => {
+                          setUser(item);
+                          navigate("/edit");
+                        }}
+                      >
+                        {" "}
+                        <EditIcon />{" "}
+                      </Button>
                     </TableRow>
                   );
                 })}
